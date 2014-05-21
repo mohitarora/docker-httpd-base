@@ -23,7 +23,6 @@
             "type": "docker-import",
             "repository": "mohitarora/httpd-base",
             "tag": "{{user `version`}}"
-        },
-        "docker-push"
+        }
     ]
 }
