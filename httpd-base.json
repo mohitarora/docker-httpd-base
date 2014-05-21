@@ -1,0 +1,29 @@
+{
+    "variables": {
+        "version": "",
+        "base-image-version": ""
+    },
+    "builders":[{
+        "type": "docker",
+        "image": "mohitarora/centos-base:{{user `base-image-version`}}",
+        "pull": true,
+        "export_path": "httpd-base-{{user `version`}}.tar"
+    }],
+    "provisioners":[
+        {
+            "type": "ansible-local",
+            "playbook_file": "playbooks/local.yml",
+            "role_paths":[
+                "roles/httpd"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "docker-import",
+            "repository": "mohitarora/httpd-base",
+            "tag": "{{user `version`}}"
+        },
+        "docker-push"
+    ]
+}
